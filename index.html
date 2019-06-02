@@ -1,0 +1,1890 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Matchy</title>
+        <link rel="icon" href="backcard.png">
+        <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c" rel="stylesheet"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="UTF-8">
+        <style>
+            body{
+                background-color:#3a3a3a;
+                font-family: 'M PLUS Rounded 1c', sans-serif;
+                overflow:hidden;
+            }
+            #center{
+                position:absolute;
+                top:0px;
+                left:0px;
+                width:100%;
+                height:100%;
+            }
+            #container{
+                position:relative;
+                top:15%;
+                background-color:white;
+                border-radius:20px;
+                animation-name:startcontainer;
+                animation-fill-mode:forwards;
+                animation-duration:1s;
+                animation-delay:1s;
+            }
+            #selectcontainer{
+                position:absolute;
+                top:0px;
+                left:0px;
+                width:100%;
+                height:100%;
+                opacity:0;
+                background-color:white;
+                z-index:100;
+                animation-name:startselectcontainer;
+                animation-delay:3.7s;
+                animation-duration:1s;
+                animation-fill-mode:forwards;
+                border-radius:20px;
+            }
+            @keyframes startselectcontainer{
+                0%   {opacity:0;}
+                100% {opacity:1;}
+            }
+            @keyframes endselect{
+                0%   {opacity:1;}
+                100% {opacity:0;}
+            }
+            @keyframes startcontainer{
+                0%   {height:0%;width:15px;background-color:black;min-height:0px;min-width:0px;}
+                50%  {height:70%;width:15px;min-height:0px;min-width:0px;background-color:#232323;}
+                100% {width:60%;background-color:white;min-height:400px;min-width:400px;height:70%;}
+            }
+            @keyframes starttitle{
+                0%   {opacity:0;}
+                100% {opacity:1;}
+            }
+            #cardone{
+                top:5px;
+                left:5px;
+                animation-delay:2s;
+            }
+            #cardtwo{
+                top:5px;
+                left:21.25%;
+                animation-delay:2.1s;
+            }
+            #cardthree{
+                top:5px;
+                right:42.5%;
+                animation-delay:2.2s;
+            }
+            #cardfour{
+                top:5px;
+                right:21.25%;
+                animation-delay:2.3s;
+            }
+            #cardfive{
+                top:5px;
+                right:5px;
+                animation-delay:2.4s;
+            }
+            #cardsix{
+                top:37.5%;
+                left:5px;
+                animation-delay:2.5s;
+            }
+            #cardseven{
+                top:37.5%;
+                left:21.25%;
+                animation-delay:2.6s;
+            }
+            #cardeight{
+                top:37.5%;
+                right:42.5%;
+                animation-delay:2.7s;
+            }
+            #cardnine{
+                top:37.5%;
+                right:21.25%;
+                animation-delay:2.8s;
+            }
+            #cardten{
+                top:37.5%;
+                right:5px;
+                animation-delay:2.9s;
+            }
+            #cardeleven{
+                bottom:5px;
+                left:5px;
+                animation-delay:3s;
+            }
+            #cardtwelve{
+                bottom:5px;
+                left:21.25%;
+                animation-delay:3.1s;
+            }
+            #cardthirteen{
+                bottom:5px;
+                right:42.5%;
+                animation-delay:3.2s;
+            }
+            #cardfourteen{
+                bottom:5px;
+                right:21.25%;
+                animation-delay:3.3s;
+            }
+            #cardfifteen{
+                bottom:5px;
+                right:5px;
+                animation-delay:3.4s;
+            }
+            .cardsslots{
+                position:absolute;
+                width:15%;
+                height:25%;
+                min-width:72px;
+                min-height:70px;
+                background-color:white;
+                border-radius:20px;
+                animation-name:starttitle;
+                animation-duration:1s;
+                opacity:0;
+                animation-fill-mode:forwards;
+            }
+            .cards{
+                position:absolute;
+                right:0px;
+                width:100%;
+                height:100%;
+                border-radius:19px;
+                background-color:#bcbcbc;
+                animation-name:null;
+                animation-duration:.5s;
+                animation-fill-mode:forwards;
+            }
+            @keyframes cardflip{
+                0%   {width:100%;}
+                100% {width:0%;}
+            }
+            @keyframes flipback{
+                0%   {width:0%;}
+                100% {width:100%;}
+            }
+            .images{
+                position:absolute;
+                top:0px;
+                left:0px;
+                height:100%;
+                border:none;
+                border-radius:18px;
+                animation-name:null;
+                animation-duration:.5s;
+                animation-delay:0s;
+                animation-fill-mode:forwards;
+                background-color:white;
+            }
+            .cardbtns{
+                position:absolute;
+                top:0px;
+                left:0px;
+                width:100%;
+                height:100%;
+                border-radius:20px;
+                background-color:black;
+                opacity:0;
+                border:none;
+                transition:.3s;
+                display:block;
+            }
+            .cardbtns:hover{
+                opacity:.5;
+            }
+            #controlbar{
+                position:fixed;
+                bottom:0px;
+                left:5%;
+                min-width:310px;
+                max-width:400px;
+                width:25%;
+                height:0px;
+                background-color:white;
+                border-top:5px solid #3a3a3a;
+                border-right:5px solid #3a3a3a;
+                border-left:5px solid #3a3a3a;
+                border-top-left-radius:25px;
+                border-top-right-radius:25px;
+                animation-name:null;
+                animation-fill-mode:forwards;
+                animation-duration:1s;
+            }
+            @keyframes startcontrol{
+                0%   {height:-10px;}
+                25%  {height:50px;}
+                100% {height:35px;}
+            }
+            @keyframes controlup{
+                0%   {height:35px;}
+                25%  {height:170px;}
+                100% {height:150px;}
+            }
+            @keyframes controldown{
+                0%   {height:150px;}
+                25%  {height:10px;}
+                100% {height:35px;}
+            }
+            
+            #imgselect{
+                background: url(arrow.png) 96% / 10% no-repeat #eee;
+                transition:.4s;position:absolute;top:38%;height:18%;width:50%;left:25%;font-size:28px;background-color:#3a3a3a;border:none;border-radius:20px;color:white;-moz-appearance:none;appearance:none;
+            }
+            #imgselect:hover{
+                background-color:#161616;
+                width:60%;
+                left:20%;
+            }
+            #imgbtn{
+                cursor:pointer;transition:.4s;border:none;border-radius:100px;color:white;position:absolute;top:70%;height:9%;width:25%;left:37.5%;font-size:30px;background-color:#3a3a3a;
+            }
+            #imgbtn:hover{
+                background-color:#161616;
+                width:30%;
+                left:35%;
+            }
+            #beta{
+                font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+            }
+            #reset{
+                display:block;
+                position:absolute;
+                top:40px;
+                width:70px;
+                height:70px;
+                outline:none;
+                border:none;
+                transition:.4s;
+                background-color:grey;
+                margin:10px;
+                border-radius:100%;
+                border:10px solid grey;
+            }
+            #reset:hover{
+                transform: rotate(720deg);
+                border:0px solid #545353;
+                background-color:#545353;
+            }
+            #themes{
+                display:block;
+                position:absolute;
+                top:40px;
+                width:70px;
+                height:70px;
+                outline:none;
+                border:none;
+                transition:.4s;
+                background-color:grey;
+                margin:10px;
+                border-radius:100%;
+                border:10px solid grey;
+                right:0px;
+            }
+            #themes:hover{
+                border:5px solid #545353;
+                background-color:#545353;
+                transform: rotate(180deg);
+            }
+            #switchcards{
+                display:block;
+                position:relative;
+                top:-40px;
+                left:12%;
+                width:70px;
+                height:70px;
+                outline:none;
+                border:none;
+                transition:.1s;
+                background-color:grey;
+                margin:10px;
+                border-radius:100%;
+                border:10px solid grey;
+            }
+            #switchcards:hover{
+                transform: rotate(45deg);
+                border:10px solid #545353;
+                background-color:#545353;
+            }
+            #pause-play{
+                display:block;
+                position:relative;
+                top:40px;
+                right:12%;
+                width:70px;
+                height:70px;
+                outline:none;
+                border:none;
+                transition:.1s;
+                background-color:grey;
+                margin:10px;
+                border-radius:100%;
+                border:10px solid grey;
+            }
+            #pause-play:hover{
+                border:0px solid #545353;
+                background-color:#545353;
+            }
+            #pause-play:disabled{
+                background-color:#232323;
+                border:10px solid #232323;
+            }
+            #pause-menu{
+                position:absolute;top:0px;left:0px;width:0%;height:0%;background-color:white;border-radius:20px;overflow:hidden;
+                animation-name:null;
+                animation-duration:1s;
+                animation-fill-mode:forwards;
+                opacity:1;
+            }
+            @keyframes pause{
+                0%   {width:15px;height:0%;background-color:black;}
+                50%  {width:15px;height:100%;background-color:#232323;}
+                75%  {opacity:1;}
+                100% {width:100%;height:100%;background-color:white;opacity:.8;}
+            }
+            @keyframes resume{
+                100%   {width:15px;height:0%;background-color:black;}
+                50%  {width:15px;height:100%;background-color:#232323;}
+                0% {width:100%;height:100%;background-color:white;opacity:1;}
+            }
+            #windiv{
+                position:absolute;top:0px;left:0px;width:100%;height:0%;background-color:#41f45c;border-radius:20px;overflow:hidden;
+                animation-name:null;
+                animation-duration:1s;
+                animation-fill-mode:forwards;
+                opacity:.8;
+                display:none;
+            }
+            @keyframes win{
+                0%{height:0%;}
+                33%{height:100%;}
+                66%{height:80%;}
+                100%{height:100%;}
+            }
+            @keyframes restartwin{
+                0%{height:100%;}
+                100%{height:0%;}
+            }
+            #timeoutdiv{
+                position:absolute;
+                top:0px;
+                left:0px;
+                width:100%;
+                height:100%;
+                border-radius:20px;
+                overflow:hidden;
+                display:none;
+                background-color:#f44242;
+                opacity:.8;
+            }
+            #upload-cards{
+                display:none;
+                opacity:0;
+                position:relative;
+                background-color:white;
+                height:80%;
+                width:50%;
+                border-radius:20px;
+                top:5%;
+                border:none;
+            }
+            #black-upload-cards{
+                display:none;
+                opacity:0;
+            }
+            #uploadbtn{
+                cursor:pointer;
+                border:none;
+                color:white;
+                background-color:#3a3a3a;
+                outline:none;
+                border-radius:20px;
+                font-size:20px;
+                position:absolute;
+                bottom:25px;
+                height:50px;
+                width:50%;
+                left:25%;
+                transition:.4s;
+            }
+            #uploadbtn:hover{
+                width:75%;
+                left:12.5%;
+                background-color:#161616;
+            }
+            #upload-select{
+                cursor:pointer;
+                outline:none;
+                border:none;
+                color:white;
+                background-color:#3a3a3a;
+                border-radius:20px;
+                font-size:20px;
+                position:absolute;
+                bottom:85px;
+                height:50px;
+                width:50%;
+                left:25%;
+                transition:.4s;
+            }
+            #upload-select:hover{
+                width:75%;
+                left:12.5%;
+                background-color:#161616;
+            }
+            #upload-img{
+                cursor:pointer;
+                border-radius:20px;
+                border:2px solid black;
+                position:absolute;
+                top:40%;
+                left:40%;
+                width:20%;
+                height:20%;
+            }
+            #timerdiv{
+                position:absolute;
+                bottom:0px;
+                width:100%;
+                height:15%;
+                transition:1s;
+            }
+            #timer{
+                position:relative;
+                text-align:center;
+                color:white;
+                font-size:38px;
+                top:0px;
+                transition:1.4s;
+            }
+            #timeoutdiv{
+                animation-name:null;
+                animation-duration:.5s;
+                animation-fill-mode:forwards;
+                opacity:0;
+            }
+            #timeouttxt{
+                position:relative;
+                top:35%;
+                animation-name:null;
+                animation-delay:.5s;
+                animation-duration:.5s;
+                animation-fill-mode:forwards;
+            }
+            @keyframes timeout1{
+                0%{opacity:0;}
+                100%{opacity:.8;}
+            }
+            @keyframes timeout2{
+                0%{opacity:0;transform:scale(1) rotate(0deg);}
+                25%{opacity:1;transform:scale(2) rotate(45deg);}
+                50%{transform:scale(3) rotate(-45deg);}
+                75%{transform:scale(2) rotate(45deg);}
+                100%{transform:scale(1) rotate(0deg);}
+            }
+        </style>
+    </head>
+    <body onload="loadpage()">
+        <center>
+            <h1 id="title" style="position:relative;top:-10px;opacity:0;color:white;font-size:50px;animation-name:starttitle;animation-duration:1s;animation-delay:1.3s;animation-fill-mode:forwards;">Matchy</h1>
+            <div id="center">
+                <div id="container">
+                    <div class="cardsslots" id="cardone">
+                        <div class="cards"><img src="backcard.png" style="width:auto;height:100%;max-height:100%;max-width:100%;"></img></div>
+                        <img class="images" src="error.png"></img>
+                        <button onclick="cardone()" id="cardbtnone" class="cardbtns"></button>
+                    </div>
+                    <div class="cardsslots" id="cardtwo">
+                        <div class="cards"><img src="backcard.png" style="width:auto;height:100%;max-height:100%;max-width:100%;"></img></div>
+                        <img class="images" src="error.png"></img>
+                        <button onclick="cardtwo()" id="cardbtntwo" class="cardbtns"></button>
+                    </div>
+                    <div class="cardsslots" id="cardthree">
+                        <div class="cards"><img src="backcard.png" style="width:auto;height:100%;max-height:100%;max-width:100%;"></img></div>
+                        <img class="images" src="error.png"></img>
+                        <button onclick="cardthree()" id="cardbtnthree" class="cardbtns"></button>
+                    </div>
+                    <div class="cardsslots" id="cardfour">
+                        <div class="cards"><img src="backcard.png" style="width:auto;height:100%;max-height:100%;max-width:100%;"></img></div>
+                        <img class="images" src="error.png"></img>
+                        <button onclick="cardfour()" id="cardbtnfour" class="cardbtns"></button>
+                    </div>
+                    <div class="cardsslots" id="cardfive">
+                        <div class="cards"><img src="backcard.png" style="width:auto;height:100%;max-height:100%;max-width:100%;"></img></div>
+                        <img class="images" src="error.png"></img>
+                        <button onclick="cardfive()" id="cardbtnfive" class="cardbtns"></button>
+                    </div>
+                    <div class="cardsslots" id="cardsix">
+                        <div class="cards"><img src="backcard.png" style="width:auto;height:100%;max-height:100%;max-width:100%;"></img></div>
+                        <img class="images" src="error.png"></img>
+                        <button onclick="cardsix()" id="cardbtnsix" class="cardbtns"></button>
+                    </div>
+                    <div class="cardsslots" id="cardseven">
+                        <div class="cards"><img src="backcard.png" style="width:auto;height:100%;max-height:100%;max-width:100%;"></img></div>
+                        <img class="images" src="error.png"></img>
+                        <button onclick="cardseven()" id="cardbtnseven" class="cardbtns"></button>
+                    </div>
+                    <div class="cardsslots" id="cardeight">
+                        <div class="cards"><img src="backcard.png" style="width:auto;height:100%;max-height:100%;max-width:100%;"></img></div>
+                        <img class="images" src="error.png"></img>
+                        <button onclick="cardeight()" id="cardbtneight" class="cardbtns"></button>
+                    </div>
+                    <div class="cardsslots" id="cardnine">
+                        <div class="cards"><img src="backcard.png" style="width:auto;height:100%;max-height:100%;max-width:100%;"></img></div>
+                        <img class="images" src="error.png"></img>
+                        <button onclick="cardnine()" id="cardbtnnine" class="cardbtns"></button>
+                    </div>
+                    <div class="cardsslots" id="cardten">
+                        <div class="cards"><img src="backcard.png" style="width:auto;height:100%;max-height:100%;max-width:100%;"></img></div>
+                        <img class="images" src="error.png"></img>
+                        <button onclick="cardten()" id="cardbtnten" class="cardbtns"></button>
+                    </div>
+                    <div class="cardsslots" id="cardeleven">
+                        <div class="cards"><img src="backcard.png" style="width:auto;height:100%;max-height:100%;max-width:100%;"></img></div>
+                        <img class="images" src="error.png"></img>
+                        <button onclick="cardeleven()" id="cardbtneleven" class="cardbtns"></button>
+                    </div>
+                    <div class="cardsslots" id="cardtwelve">
+                        <div class="cards"><img src="backcard.png" style="width:auto;height:100%;max-height:100%;max-width:100%;"></img></div>
+                        <img class="images" src="error.png"></img>
+                        <button onclick="cardtwelve()" id="cardbtntwelve" class="cardbtns"></button>
+                    </div>
+                    <div class="cardsslots" id="cardthirteen">
+                        <div class="cards"><img src="backcard.png" style="width:auto;height:100%;max-height:100%;max-width:100%;"></img></div>
+                        <img class="images" src="error.png"></img>
+                        <button onclick="cardthirteen()" id="cardbtnthirteen" class="cardbtns"></button>
+                    </div>
+                    <div class="cardsslots" id="cardfourteen">
+                        <div class="cards"><img src="backcard.png" style="width:auto;height:100%;max-height:100%;max-width:100%;"></img></div>
+                        <img class="images" src="error.png"></img>
+                        <button onclick="cardfourteen()" id="cardbtnfourteen" class="cardbtns"></button>
+                    </div>
+                    <div class="cardsslots" id="cardfifteen">
+                        <div class="cards"><img src="backcard.png" style="width:auto;height:100%;max-height:100%;max-width:100%;"></img></div>
+                        <img class="images" src="error.png"></img>
+                        <button onclick="cardfifteen()" id="cardbtnfifteen" class="cardbtns"></button>
+                    </div>
+                    <div id="pause-menu">
+                        <h1 style="position:relative;top:100px;font-size:50px;">Paused</h1>
+                    </div>
+                    <div id="windiv">
+                        <h1 style="position:relative;top:100px;font-size:50px;">You Win</h1>
+                    </div>
+                    <div id="timeoutdiv">
+                        <h1 id="timeouttxt">Times Out</h1>
+                    </div>
+                    <div id="selectcontainer">
+                        <p style="position:absolute;right:5px;bottom:0px;">Brandon Johnson © 2019</p>
+                        <p style="position:absolute;left:5px;bottom:0px;">Current Build: 2.1 (Roughly 1800 lines)</p>
+                        <select onchange="checkupload()" id="imgselect">
+                            <option>Numbers</option>
+                            <option>Colors</option>
+                            <option>Animals</option>
+                            <option>Cars Brand #1</option>
+                            <option>Pokémon</option>
+                            <option>Emoji #1</option>
+                            <option>Custom Cards</option>
+                        </select>
+                        <button onclick="imgselect()" id="imgbtn">Play</button>
+                        <p style="position:absolute;top:0px;" id="beta">Heyy, thanks for supporting this game by trying it out. It would really help if you could report bugs to 5681002@isd535.org. Enjoy!</p>
+                        <div onclick="closeupload()" id="black-upload-cards" style="border:none;border-radius:18px;position:absolute;top:0px;left:0px;width:100%;height:100%;background-color:black;opacity:.8;"></div>
+                        <div id="upload-cards">
+                            <img src="" style="border-radius:20px;outline:none;border:none;position:absolute;top:0px;left:0px;min-width:200px;min-height:200px;max-width:100%;max-height:100%;opacity:.5;" id="preview-upload"></img>
+                            <h1 style="color:#3a3a3a;position:absolute;top:5px;left:50%;-webkit-transform:translateX(-50%);">Upload Cards</h1>
+                            <p style="color:#3a3a3a;position:absolute;top:-10px;font-size:13px;left:50%;-webkit-transform:translateX(-50%);">Click the arrow to upload</p>
+                            <img id="upload-img" src="upload.png"></img>
+                            <input id="upload" onchange="upload()" title="Upload Card(s)" style="opacity:0;position:absolute;top:0px;left:0px;width:100%;height:100%;" type="file" name="pic" accept="image/png">
+                            <button id="uploadbtn" onclick="uploadcards()">Upload</button>
+                            <select id="upload-select">
+                                <option>Card 1</option>
+                                <option>Card 2</option>
+                                <option>Card 3</option>
+                                <option>Card 4</option>
+                                <option>Card 5</option>
+                                <option>Card 6</option>
+                                <option>Card 7</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div id="timerdiv">
+                    <p id="timer">Click Play</p>
+                </div>
+                <div id="controlbar">
+                    <button title="Game Controls" style="transform:rotate(180deg);outline:none;transition:.4s;background-color:Transparent;border:none;position:absolute;top:0px;left:0px;width:100%;height:40px;" id="upbtn" onclick="controls()"><img style="width:auto;height:100%;" src="arrow2.png"></img></button>
+                    <button title="Reset Cards" id="reset" onclick="resetcards()"><img id="resetimg" style="position:absolute;top:0px;left:0px;width:100%;max-height:100%;height:auto;" src="reset.png"></img></button>
+                    <button title="White Mode" id="themes" onclick="changetheme()"><img id="themes-btn-img" style="position:absolute;top:0px;left:0px;width:100%;max-height:100%;height:auto;" src="sun-icon1.png"></img></button>
+                    <button title="Pause Game" id="pause-play" onclick="pauseplay()"><img id="pause-play-img" style="position:absolute;top:0px;left:0px;width:100%;max-height:100%;height:auto;" src="pause.png"></img></button>
+                    <button title="Switch Card Deck" id="switchcards" onclick="switchcards()"><img id="switchcardimg" style="position:absolute;top:5px;left:5%;width:80%;height:auto;" src="cardswap.png"></img></button>
+                </div>
+                <div style="display:none;">
+                    <img id="errorimg" src="error.png"></img>
+                    <img id="freeimg" src="pics/free.png"></img>
+                    <img id="wrongimg" src="wrong.png"></img>
+                    <img src="cardswap1.png"></img>
+                </div>
+            </div>
+        </center>
+        <script>
+            /*
+            --KNOWN BUGS--
+            When switching cards, it covers the games control panel
+            When finish game on white mode and then reset game, timer text doesn't change black.
+            --KNOWN BUGS--
+            */
+            
+            /*
+            --IDEAS TO FINISH-- (TO DO LIST)
+            Add Profile?
+            >>timeout animation
+            >>Add highest score for (user? or )computer
+            Add different amount of cards? 4x4;4x5
+            
+            >>Custom Cards? FINISH!!!
+            
+            Make it more custom for players
+            --IDEAS TO FINISH--
+            */
+            
+            //timeout function
+            setInterval(function() {
+                if(time == 0){
+                    clearInterval(timer);
+                    document.getElementById("timeoutdiv").style.display = "block";
+                    setTimeout(function(){
+                        document.getElementById("timeoutdiv").style.animationName = "timeout1";
+                        document.getElementById("timeouttxt").style.animationName = "timeout2";
+                    }, 100);
+                    restartwin = true;
+                }
+            },1000);
+            //upload custom cards
+            function uploadcards(){
+                if(document.getElementById("upload-img").type == "image/png"){
+                    alert("works");
+                }
+                else{
+                    alert("doesn't work");
+                }
+            }
+            function closeupload(){
+                document.getElementById("upload-cards").style.display = "none";
+                document.getElementById("black-upload-cards").style.display = "none";
+                document.getElementById("upload-cards").style.opacity = "0";
+                document.getElementById("black-upload-cards").style.opacity = "0";
+                document.getElementById("imgselect").value = "Numbers";
+                document.getElementById("preview-upload").src = "";
+            }
+            function checkupload(){
+                if(document.getElementById("imgselect").value == "Custom Cards"){
+                    document.getElementById("upload-cards").style.display = "block";
+                    document.getElementById("black-upload-cards").style.display = "block";
+                    document.getElementById("upload-cards").style.opacity = "1";
+                    document.getElementById("black-upload-cards").style.opacity = ".8";
+                }
+            }
+            function upload(){
+                var preview = document.getElementById('preview-upload');
+                var file    = document.querySelector('input[type=file]').files[0];
+                var reader  = new FileReader();
+                 reader.addEventListener("load", function () {
+                    preview.src = reader.result;
+                  }, false);
+                
+                  if (file) {
+                    reader.readAsDataURL(file);
+                  }
+            }
+            //Switch Cards
+            function switchcards(){
+                clearInterval(timer);
+                document.getElementById("pause-play-img").src = "pause.png";
+                playbtn = false;
+                document.getElementById("pause-play").title = "Pause Game";
+                document.getElementById("pause-menu").style.animationName = "resume";
+                document.getElementById("pause-play").disabled = true;
+                document.getElementById("selectcontainer").style.display = "block";
+                document.getElementById("selectcontainer").style.animationName = "startselectcontainer";
+            }
+            //Themes button function
+            var whitemode = false;
+            var whitepause = false;
+            function changetheme(){
+                if(whitemode == false){
+                    whitemode = true;
+                    document.getElementById("resetimg").src = "reset-white.png";
+                    document.getElementById("switchcardimg").src = "cardswap-white.png";
+                    document.getElementById("themes-btn-img").src = "sun-icon.png";
+                    document.body.style.backgroundColor = "white";
+                    document.getElementById("title").style.color = "black";
+                    document.getElementById("timer").style.color = "black";
+                    document.getElementById("controlbar").style.borderTop = "5px solid grey";
+                    document.getElementById("controlbar").style.borderLeft = "5px solid grey";
+                    document.getElementById("controlbar").style.borderRight = "5px solid grey";
+                    if(playbtn == true){
+                        document.getElementById("pause-play-img").src = "play-white.png";
+                    }
+                    else{
+                        document.getElementById("pause-play-img").src = "pause-white.png";
+                    }
+                }
+                else{
+                    whitemode = false;
+                    document.getElementById("resetimg").src = "reset.png";
+                    document.getElementById("switchcardimg").src = "cardswap.png";
+                    document.getElementById("themes-btn-img").src = "sun-icon1.png";
+                    document.body.style.backgroundColor = "#3a3a3a";
+                    document.getElementById("title").style.color = "white";
+                    document.getElementById("timer").style.color = "white";
+                    document.getElementById("controlbar").style.borderTop = "5px solid #3a3a3a";
+                    document.getElementById("controlbar").style.borderLeft = "5px solid #3a3a3a";
+                    document.getElementById("controlbar").style.borderRight = "5px solid #3a3a3a";
+                    if(playbtn == true){
+                        document.getElementById("pause-play-img").src = "play.png";
+                    }
+                    else{
+                        document.getElementById("pause-play-img").src = "pause.png";
+                    }
+                }
+            }
+            //Pause and Play button funtions
+            var playbtn = false;
+            var paused = false;
+            function pauseplay(){
+                if(playbtn == false){
+                    if(whitemode == true){
+                        document.getElementById("pause-play-img").src = "play-white.png";
+                    }
+                    else{
+                        document.getElementById("pause-play-img").src = "play.png";
+                    }
+                    playbtn = true;
+                    document.getElementById("pause-play").title = "Resume Game";
+                    document.getElementById("pause-menu").style.animationName = "pause";
+                    clearInterval(timer);
+                }
+                else{
+                    if(whitemode == true){
+                        document.getElementById("pause-play-img").src = "pause-white.png";
+                    }
+                    else{
+                        document.getElementById("pause-play-img").src = "pause.png";
+                    }
+                    playbtn = false;
+                    document.getElementById("pause-play").title = "Pause Game";
+                    document.getElementById("pause-menu").style.animationName = "resume";
+                    timer = setInterval(function() {
+                        time = time - 1;
+                        document.getElementById("timer").innerHTML = time;
+                    }, 1000);
+                }
+            }
+            /*
+            Event listener for when you match all cards; Opens game menu
+            */
+            var matches = 0;
+            var restartwin = false;
+            setInterval(function() {
+                if(matches == 8){
+                    document.getElementById("pause-play-img").src = "wrong.png";
+                    clearInterval(timer);
+                    restartwin = true;
+                    setTimeout(function(){
+                        document.getElementById("windiv").style.display = "block";
+                        document.getElementById("windiv").style.animationName = "win";
+                        document.getElementById("timer").innerHTML = time + " seconds left";
+                        document.getElementById("pause-play").disabled = true;
+                        document.getElementById("pause-play").title = "Button Disabled";
+                        document.getElementById("timerdiv").style.bottom = "null";
+                        document.getElementById("timerdiv").style.top = "0px;"
+                        document.getElementById("timerdiv").style.height = "100%";
+                        document.getElementById("timer").style.top = "50%";
+                        document.getElementById("timer").style.fontSize = "60px";
+                        document.getElementById("timer").style.color = "#3a3a3a";
+                    }, 200);
+                }
+            }, 1);
+            /*
+            Resting cards, for reset button and when game over
+            */
+            setTimeout(resetcards, 5);
+            function resetcards(){
+                chosen1 = false;
+                chosen2 = false;
+                matches = 0;
+                time = 60;
+                document.getElementById("timer").innerHTML = "Click Play";
+                document.getElementsByClassName("cardbtns")[0].style.display = "block";
+                document.getElementsByClassName("cardbtns")[1].style.display = "block";
+                document.getElementsByClassName("cardbtns")[2].style.display = "block";
+                document.getElementsByClassName("cardbtns")[3].style.display = "block";
+                document.getElementsByClassName("cardbtns")[4].style.display = "block";
+                document.getElementsByClassName("cardbtns")[5].style.display = "block";
+                document.getElementsByClassName("cardbtns")[6].style.display = "block";
+                document.getElementsByClassName("cardbtns")[7].style.display = "block";
+                document.getElementsByClassName("cardbtns")[8].style.display = "block";
+                document.getElementsByClassName("cardbtns")[9].style.display = "block";
+                document.getElementsByClassName("cardbtns")[10].style.display = "block";
+                document.getElementsByClassName("cardbtns")[11].style.display = "block";
+                document.getElementsByClassName("cardbtns")[12].style.display = "block";
+                document.getElementsByClassName("cardbtns")[13].style.display = "block";
+                document.getElementsByClassName("cardbtns")[14].style.display = "block";
+                document.getElementsByClassName("images")[0].style.animationName = "cardflip";
+                document.getElementsByClassName("images")[1].style.animationName = "cardflip";
+                document.getElementsByClassName("images")[2].style.animationName = "cardflip";
+                document.getElementsByClassName("images")[3].style.animationName = "cardflip";
+                document.getElementsByClassName("images")[4].style.animationName = "cardflip";
+                document.getElementsByClassName("images")[5].style.animationName = "cardflip";
+                document.getElementsByClassName("images")[6].style.animationName = "cardflip";
+                document.getElementsByClassName("images")[7].style.animationName = "cardflip";
+                document.getElementsByClassName("images")[8].style.animationName = "cardflip";
+                document.getElementsByClassName("images")[9].style.animationName = "cardflip";
+                document.getElementsByClassName("images")[10].style.animationName = "cardflip";
+                document.getElementsByClassName("images")[11].style.animationName = "cardflip";
+                document.getElementsByClassName("images")[12].style.animationName = "cardflip";
+                document.getElementsByClassName("images")[13].style.animationName = "cardflip";
+                document.getElementsByClassName("images")[14].style.animationName = "cardflip";
+                document.getElementsByClassName("cards")[0].style.animationName = "flipback";
+                document.getElementsByClassName("cards")[1].style.animationName = "flipback";
+                document.getElementsByClassName("cards")[2].style.animationName = "flipback";
+                document.getElementsByClassName("cards")[3].style.animationName = "flipback";
+                document.getElementsByClassName("cards")[4].style.animationName = "flipback";
+                document.getElementsByClassName("cards")[5].style.animationName = "flipback";
+                document.getElementsByClassName("cards")[6].style.animationName = "flipback";
+                document.getElementsByClassName("cards")[7].style.animationName = "flipback";
+                document.getElementsByClassName("cards")[8].style.animationName = "flipback";
+                document.getElementsByClassName("cards")[9].style.animationName = "flipback";
+                document.getElementsByClassName("cards")[10].style.animationName = "flipback";
+                document.getElementsByClassName("cards")[11].style.animationName = "flipback";
+                document.getElementsByClassName("cards")[12].style.animationName = "flipback";
+                document.getElementsByClassName("cards")[13].style.animationName = "flipback";
+                document.getElementsByClassName("cards")[14].style.animationName = "flipback";
+                setTimeout(resetcards1, 400);
+            }
+            function resetcards1(){
+                document.getElementsByClassName("cards")[0].style.animationName = "null";
+                document.getElementsByClassName("cards")[1].style.animationName = "null";
+                document.getElementsByClassName("cards")[2].style.animationName = "null";
+                document.getElementsByClassName("cards")[3].style.animationName = "null";
+                document.getElementsByClassName("cards")[4].style.animationName = "null";
+                document.getElementsByClassName("cards")[5].style.animationName = "null";
+                document.getElementsByClassName("cards")[6].style.animationName = "null";
+                document.getElementsByClassName("cards")[7].style.animationName = "null";
+                document.getElementsByClassName("cards")[8].style.animationName = "null";
+                document.getElementsByClassName("cards")[9].style.animationName = "null";
+                document.getElementsByClassName("cards")[10].style.animationName = "null";
+                document.getElementsByClassName("cards")[11].style.animationName = "null";
+                document.getElementsByClassName("cards")[12].style.animationName = "null";
+                document.getElementsByClassName("cards")[13].style.animationName = "null";
+                document.getElementsByClassName("cards")[14].style.animationName = "null";
+                card1.src = "error.png";
+                card2.src = "error.png";
+                card3.src = "error.png";
+                card4.src = "error.png";
+                card5.src = "error.png";
+                card6.src = "error.png";
+                card7.src = "error.png";
+                card8.src = "error.png";
+                card9.src = "error.png";
+                card10.src = "error.png";
+                card11.src = "error.png";
+                card12.src = "error.png";
+                card13.src = "error.png";
+                card14.src = "error.png";
+                card15.src = "error.png";
+                document.getElementById("pause-play").disabled = false;
+                document.getElementById("pause-play").title = "Pause Game";
+                document.getElementById("pause-play-img").src = "pause.png";
+                document.getElementById("windiv").style.animationName = "restartwin";
+                if(restartwin == true){
+                    restartwin = false;
+                    document.getElementById("timeoutdiv").style.display = "none";
+                    document.getElementById("timer").innerHTML = "60";
+                    document.getElementById("timerdiv").style.bottom = "0px";
+                    document.getElementById("timerdiv").style.top = "null;"
+                    document.getElementById("timerdiv").style.height = "15%";
+                    document.getElementById("timer").style.top = "0px";
+                    document.getElementById("timer").style.fontSize = "38px";
+                    document.getElementById("timer").style.color = "white";
+                    timer = setInterval(function() {
+                        time = time - 1;
+                        document.getElementById("timer").innerHTML = time;
+                    }, 1000);
+                }
+            }
+            //Card deck seletion
+            var timer;
+            var time = 60;
+            function imgselect(){
+                controlup = false;
+                document.getElementById("pause-play").disabled = false;
+                document.getElementById("upbtn").style.transform = "rotate(180deg)";
+                document.getElementById("selectcontainer").style.animationDelay = "0s";
+                document.getElementById("controlbar").style.animationName = "startcontrol";
+                setTimeout(resetcards, 1);
+                timer = setInterval(function() {
+                    time = time - 1;
+                    document.getElementById("timer").innerHTML = time;
+                }, 1000);
+                if(document.getElementById("imgselect").value == "Numbers"){
+                    images = imgnums;
+                    document.getElementById("selectcontainer").style.animationName = "endselect";
+                    setTimeout(imgselectdone, 1000);
+                }
+                else if(document.getElementById("imgselect").value == "Colors"){
+                    images = imgcolr;
+                    document.getElementById("selectcontainer").style.animationName = "endselect";
+                    setTimeout(imgselectdone, 1000);
+                }
+                else if(document.getElementById("imgselect").value == "Animals"){
+                    images = imganim;
+                    document.getElementById("selectcontainer").style.animationName = "endselect";
+                    setTimeout(imgselectdone, 1000);
+                }
+                else if(document.getElementById("imgselect").value == "Cars Brand #1"){
+                    images = imgcar1;
+                    document.getElementById("selectcontainer").style.animationName = "endselect";
+                    setTimeout(imgselectdone, 1000);
+                }
+                else if(document.getElementById("imgselect").value == "Pokémon"){
+                    images = imgpoke;
+                    document.getElementById("selectcontainer").style.animationName = "endselect";
+                    setTimeout(imgselectdone, 1000);
+                }
+                else if(document.getElementById("imgselect").value == "Emoji #1"){
+                    images = imgemo1;
+                    document.getElementById("selectcontainer").style.animationName = "endselect";
+                    setTimeout(imgselectdone, 1000);
+                }
+                else{
+                    alert("uh oh something happend");
+                }
+            }
+            function imgselectdone(){
+                document.getElementById("selectcontainer").style.display = "none";
+            }
+            var controlup = false;
+            function controls(){
+                if(controlup == false){
+                    document.getElementById("controlbar").style.animationName = "controlup";
+                    document.getElementById("upbtn").style.transform = "rotate(0deg)";
+                    controlup = true;
+                }
+                else{
+                    document.getElementById("controlbar").style.animationName = "controldown";
+                    document.getElementById("upbtn").style.transform = "rotate(180deg)";
+                    controlup = false;
+                }
+            }
+            
+            var images;
+            var imgnums = ["pics/free.png","pics/nums/1.png","pics/nums/1.png.png","pics/nums/2.png","pics/nums/2.png.png","pics/nums/3.png","pics/nums/3.png.png","pics/nums/4.png","pics/nums/4.png.png","pics/nums/5.png","pics/nums/5.png.png","pics/nums/6.png","pics/nums/6.png.png","pics/nums/7.png","pics/nums/7.png.png"];
+            var imgcolr = ["pics/free.png","pics/color/blue.png","pics/color/blue.png.png","pics/color/green.png","pics/color/green.png.png","pics/color/orange.png","pics/color/orange.png.png","pics/color/pink.png","pics/color/pink.png.png","pics/color/purple.png","pics/color/purple.png.png","pics/color/red.png","pics/color/red.png.png","pics/color/yellow.png","pics/color/yellow.png.png"];
+            var imganim = ["pics/free.png","pics/animals/bird.png","pics/animals/bird.png.png","pics/animals/cow.png","pics/animals/cow.png.png","pics/animals/donkey.png","pics/animals/donkey.png.png","pics/animals/fish.png","pics/animals/fish.png.png","pics/animals/horse.png","pics/animals/horse.png.png","pics/animals/pig.png","pics/animals/pig.png.png","pics/animals/sheep.png","pics/animals/sheep.png.png",];
+            var imgcar1 = ["pics/free.png","pics/car1/audi.png","pics/car1/audi.png.png","pics/car1/chevy.png","pics/car1/chevy.png.png","pics/car1/dodge.png","pics/car1/dodge.png.png","pics/car1/ford.png","pics/car1/ford.png.png","pics/car1/jeep.png","pics/car1/jeep.png.png","pics/car1/mazda.png","pics/car1/mazda.png.png","pics/car1/mini.png","pics/car1/mini.png.png"];
+            var imgpoke = ["pics/free.png","pics/pokemon/caterpie.png","pics/pokemon/caterpie.png.png","pics/pokemon/jigglypuff.png","pics/pokemon/jigglypuff.png.png","pics/pokemon/pidgey.png","pics/pokemon/pidgey.png.png","pics/pokemon/pikachu.png","pics/pokemon/pikachu.png.png","pics/pokemon/psyduck.png","pics/pokemon/psyduck.png.png","pics/pokemon/rattata.png","pics/pokemon/rattata.png.png","pics/pokemon/squirtle.png","pics/pokemon/squirtle.png.png"];
+            var imgemo1 = ["pics/free.png","pics/emoji1/3heart.png","pics/emoji1/3heart.png.png","pics/emoji1/angry.png","pics/emoji1/angry.png.png","pics/emoji1/hot.png","pics/emoji1/hot.png.png","pics/emoji1/laughing.png","pics/emoji1/laughing.png.png","pics/emoji1/sad.png","pics/emoji1/sad.png.png","pics/emoji1/smiling.png","pics/emoji1/smiling.png.png","pics/emoji1/wink.png","pics/emoji1/wink.png.png"];
+            var card1 = document.getElementsByClassName("images")[0];
+            var card2 = document.getElementsByClassName("images")[1];
+            var card3 = document.getElementsByClassName("images")[2];
+            var card4 = document.getElementsByClassName("images")[3];
+            var card5 = document.getElementsByClassName("images")[4];
+            var card6 = document.getElementsByClassName("images")[5];
+            var card7 = document.getElementsByClassName("images")[6];
+            var card8 = document.getElementsByClassName("images")[7];
+            var card9 = document.getElementsByClassName("images")[8];
+            var card10 = document.getElementsByClassName("images")[9];
+            var card11 = document.getElementsByClassName("images")[10];
+            var card12 = document.getElementsByClassName("images")[11];
+            var card13 = document.getElementsByClassName("images")[12];
+            var card14 = document.getElementsByClassName("images")[13];
+            var card15 = document.getElementsByClassName("images")[14];
+            var error = document.getElementById("errorimg");
+            
+            /*Random card picker*/
+            setInterval(function(){
+                if(card1.src == "error.png" || card1.src == card2.src || card1.src == card3.src || card1.src == card4.src || card1.src == card5.src || card1.src == card6.src || card1.src == card7.src || card1.src == card8.src || card1.src == card9.src || card1.src == card10.src || card1.src == card11.src || card1.src == card12.src || card1.src == card13.src || card1.src == card14.src || card1.src == card15.src){
+                    var valueToUse = images[Math.floor(Math.random() * images.length)];
+                    card1.src = valueToUse;
+                }
+                if(card2.src == "error.png" || card2.src == card1.src || card2.src == card3.src || card2.src == card4.src || card2.src == card5.src || card2.src == card6.src || card2.src == card7.src || card2.src == card8.src || card2.src == card9.src || card2.src == card10.src || card2.src == card11.src || card2.src == card12.src || card2.src == card13.src || card2.src == card14.src || card2.src == card15.src){
+                    var valueToUse = images[Math.floor(Math.random() * images.length)];
+                    card2.src = valueToUse;
+                }
+                if(card3.src == error.src || card3.src == card2.src || card3.src == card1.src || card3.src == card4.src || card3.src == card5.src || card3.src == card6.src || card3.src == card7.src || card3.src == card8.src || card3.src == card9.src || card3.src == card10.src || card3.src == card11.src || card3.src == card12.src || card3.src == card13.src || card3.src == card14.src || card3.src == card15.src){
+                    var valueToUse = images[Math.floor(Math.random() * images.length)];
+                    card3.src = valueToUse;
+                }
+                if(card4.src == error.src || card4.src == card2.src || card4.src == card3.src || card4.src == card1.src || card4.src == card5.src || card4.src == card6.src || card4.src == card7.src || card4.src == card8.src || card4.src == card9.src || card4.src == card10.src || card4.src == card11.src || card4.src == card12.src || card4.src == card13.src || card4.src == card14.src || card4.src == card15.src){
+                    var valueToUse = images[Math.floor(Math.random() * images.length)];
+                    card4.src = valueToUse;
+                }
+                if(card5.src == error.src || card5.src == card2.src || card5.src == card3.src || card5.src == card4.src || card5.src == card1.src || card5.src == card6.src || card5.src == card7.src || card5.src == card8.src || card5.src == card9.src || card5.src == card10.src || card5.src == card11.src || card5.src == card12.src || card5.src == card13.src || card5.src == card14.src || card5.src == card15.src){
+                    var valueToUse = images[Math.floor(Math.random() * images.length)];
+                    card5.src = valueToUse;
+                }
+                if(card6.src == error.src || card6.src == card2.src || card6.src == card3.src || card6.src == card4.src || card6.src == card5.src || card6.src == card1.src || card6.src == card7.src || card6.src == card8.src || card6.src == card9.src || card6.src == card10.src || card6.src == card11.src || card6.src == card12.src || card6.src == card13.src || card6.src == card14.src || card6.src == card15.src){
+                    var valueToUse = images[Math.floor(Math.random() * images.length)];
+                    card6.src = valueToUse;
+                }
+                if(card7.src == error.src || card7.src == card2.src || card7.src == card3.src || card7.src == card4.src || card7.src == card5.src || card7.src == card6.src || card7.src == card1.src || card7.src == card8.src || card7.src == card9.src || card7.src == card10.src || card7.src == card11.src || card7.src == card12.src || card7.src == card13.src || card7.src == card14.src || card7.src == card15.src){
+                    var valueToUse = images[Math.floor(Math.random() * images.length)];
+                    card7.src = valueToUse;
+                }
+                if(card8.src == error.src || card8.src == card2.src || card8.src == card3.src || card8.src == card4.src || card8.src == card5.src || card8.src == card6.src || card8.src == card7.src || card8.src == card1.src || card8.src == card9.src || card8.src == card10.src || card8.src == card11.src || card8.src == card12.src || card8.src == card13.src || card8.src == card14.src || card8.src == card15.src){
+                    var valueToUse = images[Math.floor(Math.random() * images.length)];
+                    card8.src = valueToUse;
+                }
+                if(card9.src == error.src || card9.src == card2.src || card9.src == card3.src || card9.src == card4.src || card9.src == card5.src || card9.src == card6.src || card9.src == card7.src || card9.src == card8.src || card9.src == card1.src || card9.src == card10.src || card9.src == card11.src || card9.src == card12.src || card9.src == card13.src || card9.src == card14.src || card9.src == card15.src){
+                    var valueToUse = images[Math.floor(Math.random() * images.length)];
+                    card9.src = valueToUse;
+                }
+                if(card10.src == error.src || card10.src == card2.src || card10.src == card3.src || card10.src == card4.src || card10.src == card5.src || card10.src == card6.src || card10.src == card7.src || card10.src == card8.src || card10.src == card9.src || card10.src == card1.src || card10.src == card11.src || card10.src == card12.src || card10.src == card13.src || card10.src == card14.src || card10.src == card15.src){
+                    var valueToUse = images[Math.floor(Math.random() * images.length)];
+                    card10.src = valueToUse;
+                }
+                if(card11.src == error.src || card11.src == card2.src || card11.src == card3.src || card11.src == card4.src || card11.src == card5.src || card11.src == card6.src || card11.src == card7.src || card11.src == card8.src || card11.src == card9.src || card11.src == card10.src || card11.src == card1.src || card11.src == card12.src || card11.src == card13.src || card11.src == card14.src || card11.src == card15.src){
+                    var valueToUse = images[Math.floor(Math.random() * images.length)];
+                    card11.src = valueToUse;
+                }
+                if(card12.src == error.src || card12.src == card2.src || card12.src == card3.src || card12.src == card4.src || card12.src == card5.src || card12.src == card6.src || card12.src == card7.src || card12.src == card8.src || card12.src == card9.src || card12.src == card10.src || card12.src == card11.src || card12.src == card1.src || card12.src == card13.src || card12.src == card14.src || card12.src == card15.src){
+                    var valueToUse = images[Math.floor(Math.random() * images.length)];
+                    card12.src = valueToUse;
+                }
+                if(card13.src == error.src || card13.src == card2.src || card13.src == card3.src || card13.src == card4.src || card13.src == card5.src || card13.src == card6.src || card13.src == card7.src || card13.src == card8.src || card13.src == card9.src || card13.src == card10.src || card13.src == card11.src || card13.src == card12.src || card13.src == card1.src || card13.src == card14.src || card13.src == card15.src){
+                    var valueToUse = images[Math.floor(Math.random() * images.length)];
+                    card13.src = valueToUse;
+                }
+                if(card14.src == error.src || card14.src == card2.src || card14.src == card3.src || card14.src == card4.src || card14.src == card5.src || card14.src == card6.src || card14.src == card7.src || card14.src == card8.src || card14.src == card9.src || card14.src == card10.src || card14.src == card11.src || card14.src == card12.src || card14.src == card13.src || card14.src == card1.src || card14.src == card15.src){
+                    var valueToUse = images[Math.floor(Math.random() * images.length)];
+                    card14.src = valueToUse;
+                }
+                if(card15.src == error.src || card15.src == card2.src || card15.src == card3.src || card15.src == card4.src || card15.src == card5.src || card15.src == card6.src || card15.src == card7.src || card15.src == card8.src || card15.src == card9.src || card15.src == card10.src || card15.src == card11.src || card15.src == card12.src || card15.src == card13.src || card15.src == card14.src || card15.src == card1.src){
+                    var valueToUse = images[Math.floor(Math.random() * images.length)];
+                    card15.src = valueToUse;
+                }
+            },1);
+            
+            /*
+            Sees if cards are the same
+            */
+            var free = document.getElementById("freeimg");
+            var chosen1 = false;
+            var chosen2 = false;
+            var chosen1data;
+            var chosen1data2;
+            var chosen1data3;
+            var freecard;
+            var freecard1;
+            var turnspeed = 500;
+            function freeimg(){
+                freecard.style.animationName = "cardflip";
+            }
+            function reset(){
+                chosen1 = false;
+                chosen2 = false;
+            }
+            function cardone(){
+                if(chosen1 == false){
+                    document.getElementById("cardbtnone").style.display = "none";
+                    document.getElementsByClassName("cards")[0].style.animationName = "cardflip";
+                    document.getElementsByClassName("images")[0].style.animationName = "flipback";
+                    if(card1.src == free.src){
+                        freecard = card1;
+                        matches = matches + 1;
+                        freecard1 = document.getElementsByClassName("cards")[0];
+                        setTimeout(freeimg, 1500);
+                    }
+                    else{
+                        chosen1 = true;
+                        chosen1data = document.getElementsByClassName("images")[0];
+                        chosen1data2 = document.getElementsByClassName("cards")[0];
+                        chosen1data3 = document.getElementById("cardbtnone");
+                    }
+                }
+                else if(chosen2 == false){
+                    chosen2 = true;
+                    document.getElementById("cardbtnone").style.display = "none";
+                    document.getElementsByClassName("cards")[0].style.animationName = "cardflip";
+                    document.getElementsByClassName("images")[0].style.animationName = "flipback";
+                    setTimeout(function() {
+                        if(card1.src == free.src){
+                            freecard = card1;
+                            matches = matches + 1;
+                            freecard1 = document.getElementsByClassName("cards")[0];
+                            chosen2 = false;
+                            setTimeout(freeimg, 1000);
+                        }
+                        else{
+                            if(card1.src == chosen1data.src + '.png' || card1.src + '.png' == chosen1data.src){
+                                document.getElementsByClassName("images")[0].style.animationName = "cardflip";
+                                chosen1data.style.animationName = "cardflip";
+                                matches = matches + 1;
+                                setTimeout(reset, 400);
+                            }
+                            else{
+                                setTimeout(function() {
+                                    document.getElementsByClassName("images")[0].style.animationName = "cardflip";
+                                    document.getElementsByClassName("cards")[0].style.animationName = "flipback";
+                                    document.getElementById("cardbtnone").style.display = "block";
+                                    chosen1data.style.animationName = "cardflip";
+                                    chosen1data2.style.animationName = "flipback";
+                                    chosen1data3.style.display = "block";
+                                    setTimeout(reset, 400);
+                                }, turnspeed);
+                            }
+                        }
+                    }, 600);
+                    
+                    
+                }
+            }
+            function cardtwo(){
+                if(chosen1 == false){
+                    document.getElementById("cardbtntwo").style.display = "none";
+                    document.getElementsByClassName("cards")[1].style.animationName = "cardflip";
+                    document.getElementsByClassName("images")[1].style.animationName = "flipback";
+                    if(card2.src == free.src){
+                        freecard = card2;
+                        matches = matches + 1;
+                        freecard1 = document.getElementsByClassName("cards")[1];
+                        setTimeout(freeimg, 1000);
+                    }
+                    else{
+                        chosen1 = true;
+                        chosen1data = document.getElementsByClassName("images")[1];
+                        chosen1data2 = document.getElementsByClassName("cards")[1];
+                        chosen1data3 = document.getElementById("cardbtntwo");
+                    }
+                }
+                else if(chosen2 == false){
+                    chosen2 = true;
+                    document.getElementById("cardbtntwo").style.display = "none";
+                    document.getElementsByClassName("cards")[1].style.animationName = "cardflip";
+                    document.getElementsByClassName("images")[1].style.animationName = "flipback";
+                    setTimeout(function() {
+                        if(card2.src == free.src){
+                            freecard = card2;
+                            matches = matches + 1;
+                            freecard1 = document.getElementsByClassName("cards")[1];
+                            chosen2 = false;
+                            setTimeout(freeimg, 1000);
+                        }
+                        else{
+                            if(card2.src == chosen1data.src + '.png' || card2.src + '.png' == chosen1data.src){
+                                document.getElementsByClassName("images")[1].style.animationName = "cardflip";
+                                chosen1data.style.animationName = "cardflip";
+                                matches = matches + 1;
+                                setTimeout(reset, 400);
+                            }
+                            else{
+                                setTimeout(function() {
+                                    document.getElementsByClassName("images")[1].style.animationName = "cardflip";
+                                    document.getElementsByClassName("cards")[1].style.animationName = "flipback";
+                                    document.getElementById("cardbtntwo").style.display = "block";
+                                    chosen1data.style.animationName = "cardflip";
+                                    chosen1data2.style.animationName = "flipback";
+                                    chosen1data3.style.display = "block";
+                                    setTimeout(reset, 400);
+                                }, turnspeed);
+                            }
+                        }
+                    }, 600);
+                }
+            }
+            function cardthree(){
+                if(chosen1 == false){
+                    document.getElementById("cardbtnthree").style.display = "none";
+                    document.getElementsByClassName("cards")[2].style.animationName = "cardflip";
+                    document.getElementsByClassName("images")[2].style.animationName = "flipback";
+                    if(card3.src == free.src){
+                        freecard = card3;
+                        matches = matches + 1;
+                        freecard1 = document.getElementsByClassName("cards")[2];
+                        setTimeout(freeimg, 1000);
+                    }
+                    else{
+                        chosen1 = true;
+                        chosen1data = document.getElementsByClassName("images")[2];
+                        chosen1data2 = document.getElementsByClassName("cards")[2];
+                        chosen1data3 = document.getElementById("cardbtnthree");
+                    }
+                }
+                else if(chosen2 == false){
+                    chosen2 = true;
+                    document.getElementById("cardbtnthree").style.display = "none";
+                    document.getElementsByClassName("cards")[2].style.animationName = "cardflip";
+                    document.getElementsByClassName("images")[2].style.animationName = "flipback";
+                    setTimeout(function() {
+                        if(card3.src == free.src){
+                            freecard = card3;
+                            matches = matches + 1;
+                            freecard1 = document.getElementsByClassName("cards")[2];
+                            chosen2 = false;
+                            setTimeout(freeimg, 1000);
+                        }
+                        else{
+                            if(card3.src == chosen1data.src + '.png' || card3.src + '.png' == chosen1data.src){
+                                document.getElementsByClassName("images")[2].style.animationName = "cardflip";
+                                chosen1data.style.animationName = "cardflip";
+                                matches = matches + 1;
+                                setTimeout(reset, 400);
+                            }
+                            else{
+                                setTimeout(function() {
+                                    document.getElementsByClassName("images")[2].style.animationName = "cardflip";
+                                    document.getElementsByClassName("cards")[2].style.animationName = "flipback";
+                                    document.getElementById("cardbtnthree").style.display = "block";
+                                    chosen1data.style.animationName = "cardflip";
+                                    chosen1data2.style.animationName = "flipback";
+                                    chosen1data3.style.display = "block";
+                                    setTimeout(reset, 400);
+                                }, turnspeed);
+                            }
+                        }
+                    }, 600);
+                }
+            }
+            function cardfour(){
+                if(chosen1 == false){
+                    document.getElementById("cardbtnfour").style.display = "none";
+                    document.getElementsByClassName("cards")[3].style.animationName = "cardflip";
+                    document.getElementsByClassName("images")[3].style.animationName = "flipback";
+                    if(card4.src == free.src){
+                        freecard = card4;
+                        matches = matches + 1;
+                        freecard1 = document.getElementsByClassName("cards")[3];
+                        setTimeout(freeimg, 1000);
+                    }
+                    else{
+                        chosen1 = true;
+                        chosen1data = document.getElementsByClassName("images")[3];
+                        chosen1data2 = document.getElementsByClassName("cards")[3];
+                        chosen1data3 = document.getElementById("cardbtnfour");
+                    }
+                }
+                else if(chosen2 == false){
+                    chosen2 = true;
+                    document.getElementById("cardbtnfour").style.display = "none";
+                    document.getElementsByClassName("cards")[3].style.animationName = "cardflip";
+                    document.getElementsByClassName("images")[3].style.animationName = "flipback";
+                    setTimeout(function() {
+                        if(card4.src == free.src){
+                            freecard = card4;
+                            matches = matches + 1;
+                            freecard1 = document.getElementsByClassName("cards")[3];
+                            chosen2 = false;
+                            setTimeout(freeimg, 1000);
+                        }
+                        else{
+                            if(card4.src == chosen1data.src + '.png' || card4.src + '.png' == chosen1data.src){
+                                document.getElementsByClassName("images")[3].style.animationName = "cardflip";
+                                chosen1data.style.animationName = "cardflip";
+                                matches = matches + 1;
+                                setTimeout(reset, 400);
+                            }
+                            else{
+                                setTimeout(function() {
+                                    document.getElementsByClassName("images")[3].style.animationName = "cardflip";
+                                    document.getElementsByClassName("cards")[3].style.animationName = "flipback";
+                                    document.getElementById("cardbtnfour").style.display = "block";
+                                    chosen1data.style.animationName = "cardflip";
+                                    chosen1data2.style.animationName = "flipback";
+                                    chosen1data3.style.display = "block";
+                                    setTimeout(reset, 400);
+                                }, turnspeed);
+                            }
+                        }
+                    }, 600);
+                }
+            }
+            function cardfive(){
+                if(chosen1 == false){
+                    document.getElementById("cardbtnfive").style.display = "none";
+                    document.getElementsByClassName("cards")[4].style.animationName = "cardflip";
+                    document.getElementsByClassName("images")[4].style.animationName = "flipback";
+                    if(card5.src == free.src){
+                        freecard = card5;
+                        matches = matches + 1;
+                        freecard1 = document.getElementsByClassName("cards")[4];
+                        setTimeout(freeimg, 1000);
+                    }
+                    else{
+                        chosen1 = true;
+                        chosen1data = document.getElementsByClassName("images")[4];
+                        chosen1data2 = document.getElementsByClassName("cards")[4];
+                        chosen1data3 = document.getElementById("cardbtnfive");
+                    }
+                }
+                else if(chosen2 == false){
+                    chosen2 = true;
+                    document.getElementById("cardbtnfive").style.display = "none";
+                    document.getElementsByClassName("cards")[4].style.animationName = "cardflip";
+                    document.getElementsByClassName("images")[4].style.animationName = "flipback";
+                    setTimeout(function() {
+                        if(card5.src == free.src){
+                            freecard = card5;
+                            matches = matches + 1;
+                            freecard1 = document.getElementsByClassName("cards")[4];
+                            chosen2 = false;
+                            setTimeout(freeimg, 1000);
+                        }
+                        else{
+                            if(card5.src == chosen1data.src + '.png' || card5.src + '.png' == chosen1data.src){
+                                document.getElementsByClassName("images")[4].style.animationName = "cardflip";
+                                chosen1data.style.animationName = "cardflip";
+                                matches = matches + 1;
+                                setTimeout(reset, 400);
+                            }
+                            else{
+                                setTimeout(function() {
+                                    document.getElementsByClassName("images")[4].style.animationName = "cardflip";
+                                    document.getElementsByClassName("cards")[4].style.animationName = "flipback";
+                                    document.getElementById("cardbtnfive").style.display = "block";
+                                    chosen1data.style.animationName = "cardflip";
+                                    chosen1data2.style.animationName = "flipback";
+                                    chosen1data3.style.display = "block";
+                                    setTimeout(reset, 400);
+                                }, turnspeed);
+                            }
+                        }
+                    }, 600);
+                }
+            }
+            function cardsix(){
+                if(chosen1 == false){
+                    document.getElementById("cardbtnsix").style.display = "none";
+                    document.getElementsByClassName("cards")[5].style.animationName = "cardflip";
+                    document.getElementsByClassName("images")[5].style.animationName = "flipback";
+                    if(card6.src == free.src){
+                        freecard = card6;
+                        matches = matches + 1;
+                        freecard1 = document.getElementsByClassName("cards")[5];
+                        setTimeout(freeimg, 1000);
+                    }
+                    else{
+                        chosen1 = true;
+                        chosen1data = document.getElementsByClassName("images")[5];
+                        chosen1data2 = document.getElementsByClassName("cards")[5];
+                        chosen1data3 = document.getElementById("cardbtnsix");
+                    }
+                }
+                else if(chosen2 == false){
+                    chosen2 = true;
+                    document.getElementById("cardbtnsix").style.display = "none";
+                    document.getElementsByClassName("cards")[5].style.animationName = "cardflip";
+                    document.getElementsByClassName("images")[5].style.animationName = "flipback";
+                    setTimeout(function() {
+                        if(card6.src == free.src){
+                            freecard = card6;
+                            matches = matches + 1;
+                            freecard1 = document.getElementsByClassName("cards")[5];
+                            chosen2 = false;
+                            setTimeout(freeimg, 1000);
+                        }
+                        else{
+                            if(card6.src == chosen1data.src + '.png' || card6.src + '.png' == chosen1data.src){
+                                document.getElementsByClassName("images")[5].style.animationName = "cardflip";
+                                chosen1data.style.animationName = "cardflip";
+                                matches = matches + 1;
+                                setTimeout(reset, 400);
+                            }
+                            else{
+                                setTimeout(function() {
+                                    document.getElementsByClassName("images")[5].style.animationName = "cardflip";
+                                    document.getElementsByClassName("cards")[5].style.animationName = "flipback";
+                                    document.getElementById("cardbtnsix").style.display = "block";
+                                    chosen1data.style.animationName = "cardflip";
+                                    chosen1data2.style.animationName = "flipback";
+                                    chosen1data3.style.display = "block";
+                                    setTimeout(reset, 400);
+                                }, turnspeed);
+                            }
+                        }
+                    }, 600);
+                }
+            }
+            function cardseven(){
+                if(chosen1 == false){
+                    document.getElementById("cardbtnseven").style.display = "none";
+                    document.getElementsByClassName("cards")[6].style.animationName = "cardflip";
+                    document.getElementsByClassName("images")[6].style.animationName = "flipback";
+                    if(card7.src == free.src){
+                        freecard = card7;
+                        matches = matches + 1;
+                        freecard1 = document.getElementsByClassName("cards")[6];
+                        setTimeout(freeimg, 1000);
+                    }
+                    else{
+                        chosen1 = true;
+                        chosen1data = document.getElementsByClassName("images")[6];
+                        chosen1data2 = document.getElementsByClassName("cards")[6];
+                        chosen1data3 = document.getElementById("cardbtnseven");
+                    }
+                }
+                else if(chosen2 == false){
+                    chosen2 = true;
+                    document.getElementById("cardbtnseven").style.display = "none";
+                    document.getElementsByClassName("cards")[6].style.animationName = "cardflip";
+                    document.getElementsByClassName("images")[6].style.animationName = "flipback";
+                    setTimeout(function() {
+                        if(card7.src == free.src){
+                            freecard = card7;
+                            matches = matches + 1;
+                            freecard1 = document.getElementsByClassName("cards")[6];
+                            chosen2 = false;
+                            setTimeout(freeimg, 1000);
+                        }
+                        else{
+                            if(card7.src == chosen1data.src + '.png' || card7.src + '.png' == chosen1data.src){
+                                document.getElementsByClassName("images")[6].style.animationName = "cardflip";
+                                chosen1data.style.animationName = "cardflip";
+                                matches = matches + 1;
+                                setTimeout(reset, 400);
+                            }
+                            else{
+                                setTimeout(function() {
+                                    document.getElementsByClassName("images")[6].style.animationName = "cardflip";
+                                    document.getElementsByClassName("cards")[6].style.animationName = "flipback";
+                                    document.getElementById("cardbtnseven").style.display = "block";
+                                    chosen1data.style.animationName = "cardflip";
+                                    chosen1data2.style.animationName = "flipback";
+                                    chosen1data3.style.display = "block";
+                                    setTimeout(reset, 400);
+                                }, turnspeed);
+                            }
+                        }
+                    }, 600);
+                }
+            }
+            function cardeight(){
+                if(chosen1 == false){
+                    document.getElementById("cardbtneight").style.display = "none";
+                    document.getElementsByClassName("cards")[7].style.animationName = "cardflip";
+                    document.getElementsByClassName("images")[7].style.animationName = "flipback";
+                    if(card8.src == free.src){
+                        freecard = card8;
+                        matches = matches + 1;
+                        freecard1 = document.getElementsByClassName("cards")[7];
+                        setTimeout(freeimg, 1000);
+                    }
+                    else{
+                        chosen1 = true;
+                        chosen1data = document.getElementsByClassName("images")[7];
+                        chosen1data2 = document.getElementsByClassName("cards")[7];
+                        chosen1data3 = document.getElementById("cardbtneight");
+                    }
+                }
+                else if(chosen2 == false){
+                    chosen2 = true;
+                    document.getElementById("cardbtneight").style.display = "none";
+                    document.getElementsByClassName("cards")[7].style.animationName = "cardflip";
+                    document.getElementsByClassName("images")[7].style.animationName = "flipback";
+                    setTimeout(function() {
+                        if(card8.src == free.src){
+                            freecard = card8;
+                            matches = matches + 1;
+                            freecard1 = document.getElementsByClassName("cards")[7];
+                            chosen2 = false;
+                            setTimeout(freeimg, 1000);
+                        }
+                        else{
+                            if(card8.src == chosen1data.src + '.png' || card8.src + '.png' == chosen1data.src){
+                                document.getElementsByClassName("images")[7].style.animationName = "cardflip";
+                                chosen1data.style.animationName = "cardflip";
+                                matches = matches + 1;
+                                setTimeout(reset, 400);
+                            }
+                            else{
+                                setTimeout(function() {
+                                    document.getElementsByClassName("images")[7].style.animationName = "cardflip";
+                                    document.getElementsByClassName("cards")[7].style.animationName = "flipback";
+                                    document.getElementById("cardbtneight").style.display = "block";
+                                    chosen1data.style.animationName = "cardflip";
+                                    chosen1data2.style.animationName = "flipback";
+                                    chosen1data3.style.display = "block";
+                                    setTimeout(reset, 400);
+                                }, turnspeed);
+                            }
+                        }
+                    }, 600);
+                }
+            }
+            function cardnine(){
+                if(chosen1 == false){
+                    document.getElementById("cardbtnnine").style.display = "none";
+                    document.getElementsByClassName("cards")[8].style.animationName = "cardflip";
+                    document.getElementsByClassName("images")[8].style.animationName = "flipback";
+                    if(card9.src == free.src){
+                        freecard = card9;
+                        matches = matches + 1;
+                        freecard1 = document.getElementsByClassName("cards")[8];
+                        setTimeout(freeimg, 1000);
+                    }
+                    else{
+                        chosen1 = true;
+                        chosen1data = document.getElementsByClassName("images")[8];
+                        chosen1data2 = document.getElementsByClassName("cards")[8];
+                        chosen1data3 = document.getElementById("cardbtnnine");
+                    }
+                }
+                else if(chosen2 == false){
+                    chosen2 = true;
+                    document.getElementById("cardbtnnine").style.display = "none";
+                    document.getElementsByClassName("cards")[8].style.animationName = "cardflip";
+                    document.getElementsByClassName("images")[8].style.animationName = "flipback";
+                    setTimeout(function() {
+                        if(card9.src == free.src){
+                            freecard = card9;
+                            matches = matches + 1;
+                            freecard1 = document.getElementsByClassName("cards")[8];
+                            chosen2 = false;
+                            setTimeout(freeimg, 1000);
+                        }
+                        else{
+                            if(card9.src == chosen1data.src + '.png' || card9.src + '.png' == chosen1data.src){
+                                document.getElementsByClassName("images")[8].style.animationName = "cardflip";
+                                chosen1data.style.animationName = "cardflip";
+                                matches = matches + 1;
+                                setTimeout(reset, 400);
+                            }
+                            else{
+                                setTimeout(function() {
+                                    document.getElementsByClassName("images")[8].style.animationName = "cardflip";
+                                    document.getElementsByClassName("cards")[8].style.animationName = "flipback";
+                                    document.getElementById("cardbtnnine").style.display = "block";
+                                    chosen1data.style.animationName = "cardflip";
+                                    chosen1data2.style.animationName = "flipback";
+                                    chosen1data3.style.display = "block";
+                                    setTimeout(reset, 400);
+                                }, turnspeed);
+                            }
+                        }
+                    }, 600);
+                }
+            }
+            function cardten(){
+                if(chosen1 == false){
+                    document.getElementById("cardbtnten").style.display = "none";
+                    document.getElementsByClassName("cards")[9].style.animationName = "cardflip";
+                    document.getElementsByClassName("images")[9].style.animationName = "flipback";
+                    if(card10.src == free.src){
+                        freecard = card10;
+                        matches = matches + 1;
+                        freecard1 = document.getElementsByClassName("cards")[9];
+                        setTimeout(freeimg, 1500);
+                    }
+                    else{
+                        chosen1 = true;
+                        chosen1data = document.getElementsByClassName("images")[9];
+                        chosen1data2 = document.getElementsByClassName("cards")[9];
+                        chosen1data3 = document.getElementById("cardbtnten");
+                    }
+                }
+                else if(chosen2 == false){
+                    chosen2 = true;
+                    document.getElementById("cardbtnten").style.display = "none";
+                    document.getElementsByClassName("cards")[9].style.animationName = "cardflip";
+                    document.getElementsByClassName("images")[9].style.animationName = "flipback";
+                    setTimeout(function() {
+                        if(card10.src == free.src){
+                            freecard = card10;
+                            matches = matches + 1;
+                            freecard1 = document.getElementsByClassName("cards")[9];
+                            chosen2 = false;
+                            setTimeout(freeimg, 1000);
+                        }
+                        else{
+                            if(card10.src == chosen1data.src + '.png' || card10.src + '.png' == chosen1data.src){
+                                document.getElementsByClassName("images")[9].style.animationName = "cardflip";
+                                chosen1data.style.animationName = "cardflip";
+                                matches = matches + 1;
+                                setTimeout(reset, 400);
+                            }
+                            else{
+                                setTimeout(function() {
+                                    document.getElementsByClassName("images")[9].style.animationName = "cardflip";
+                                    document.getElementsByClassName("cards")[9].style.animationName = "flipback";
+                                    document.getElementById("cardbtnten").style.display = "block";
+                                    chosen1data.style.animationName = "cardflip";
+                                    chosen1data2.style.animationName = "flipback";
+                                    chosen1data3.style.display = "block";
+                                    setTimeout(reset, 400);
+                                }, turnspeed);
+                            }
+                        }
+                    }, 600);
+                }
+            }
+            function cardeleven(){
+                if(chosen1 == false){
+                    document.getElementById("cardbtneleven").style.display = "none";
+                    document.getElementsByClassName("cards")[10].style.animationName = "cardflip";
+                    document.getElementsByClassName("images")[10].style.animationName = "flipback";
+                    if(card11.src == free.src){
+                        freecard = card11;
+                        matches = matches + 1;
+                        freecard1 = document.getElementsByClassName("cards")[10];
+                        setTimeout(freeimg, 1500);
+                    }
+                    else{
+                        chosen1 = true;
+                        chosen1data = document.getElementsByClassName("images")[10];
+                        chosen1data2 = document.getElementsByClassName("cards")[10];
+                        chosen1data3 = document.getElementById("cardbtneleven");
+                    }
+                }
+                else if(chosen2 == false){
+                    chosen2 = true;
+                    document.getElementById("cardbtneleven").style.display = "none";
+                    document.getElementsByClassName("cards")[10].style.animationName = "cardflip";
+                    document.getElementsByClassName("images")[10].style.animationName = "flipback";
+                    setTimeout(function() {
+                        if(card11.src == free.src){
+                            freecard = card11;
+                            matches = matches + 1;
+                            freecard1 = document.getElementsByClassName("cards")[10];
+                            chosen2 = false;
+                            setTimeout(freeimg, 1000);
+                        }
+                        else{
+                            if(card11.src == chosen1data.src + '.png' || card11.src + '.png' == chosen1data.src){
+                                document.getElementsByClassName("images")[10].style.animationName = "cardflip";
+                                chosen1data.style.animationName = "cardflip";
+                                matches = matches + 1;
+                                setTimeout(reset, 400);
+                            }
+                            else{
+                                setTimeout(function() {
+                                    document.getElementsByClassName("images")[10].style.animationName = "cardflip";
+                                    document.getElementsByClassName("cards")[10].style.animationName = "flipback";
+                                    document.getElementById("cardbtneleven").style.display = "block";
+                                    chosen1data.style.animationName = "cardflip";
+                                    chosen1data2.style.animationName = "flipback";
+                                    chosen1data3.style.display = "block";
+                                    setTimeout(reset, 400);
+                                }, turnspeed);
+                            }
+                        }
+                    }, 600);
+                }
+            }
+            function cardtwelve(){
+                if(chosen1 == false){
+                    document.getElementById("cardbtntwelve").style.display = "none";
+                    document.getElementsByClassName("cards")[11].style.animationName = "cardflip";
+                    document.getElementsByClassName("images")[11].style.animationName = "flipback";
+                    if(card12.src == free.src){
+                        freecard = card12;
+                        matches = matches + 1;
+                        freecard1 = document.getElementsByClassName("cards")[11];
+                        setTimeout(freeimg, 1500);
+                    }
+                    else{
+                        chosen1 = true;
+                        chosen1data = document.getElementsByClassName("images")[11];
+                        chosen1data2 = document.getElementsByClassName("cards")[11];
+                        chosen1data3 = document.getElementById("cardbtntwelve");
+                    }
+                }
+                else if(chosen2 == false){
+                    chosen2 = true;
+                    document.getElementById("cardbtntwelve").style.display = "none";
+                    document.getElementsByClassName("cards")[11].style.animationName = "cardflip";
+                    document.getElementsByClassName("images")[11].style.animationName = "flipback";
+                    setTimeout(function() {
+                        if(card12.src == free.src){
+                            freecard = card12;
+                            matches = matches + 1;
+                            freecard1 = document.getElementsByClassName("cards")[11];
+                            chosen2 = false;
+                            setTimeout(freeimg, 1000);
+                        }
+                        else{
+                            if(card12.src == chosen1data.src + '.png' || card12.src + '.png' == chosen1data.src){
+                                document.getElementsByClassName("images")[11].style.animationName = "cardflip";
+                                chosen1data.style.animationName = "cardflip";
+                                matches = matches + 1;
+                                setTimeout(reset, 400);
+                            }
+                            else{
+                                setTimeout(function() {
+                                    document.getElementsByClassName("images")[11].style.animationName = "cardflip";
+                                    document.getElementsByClassName("cards")[11].style.animationName = "flipback";
+                                   document.getElementById("cardbtntwelve").style.display = "block";
+                                   chosen1data.style.animationName = "cardflip";
+                                   chosen1data2.style.animationName = "flipback";
+                                   chosen1data3.style.display = "block";
+                                   setTimeout(reset, 400);
+                                }, turnspeed);
+                            }
+                        }
+                    }, 600);
+                }
+            }
+            function cardthirteen(){
+                if(chosen1 == false){
+                    document.getElementById("cardbtnthirteen").style.display = "none";
+                    document.getElementsByClassName("cards")[12].style.animationName = "cardflip";
+                    document.getElementsByClassName("images")[12].style.animationName = "flipback";
+                    if(card13.src == free.src){
+                        freecard = card13;
+                        matches = matches + 1;
+                        freecard1 = document.getElementsByClassName("cards")[12];
+                        setTimeout(freeimg, 1500);
+                    }
+                    else{
+                        chosen1 = true;
+                        chosen1data = document.getElementsByClassName("images")[12];
+                        chosen1data2 = document.getElementsByClassName("cards")[12];
+                        chosen1data3 = document.getElementById("cardbtnthirteen");
+                    }
+                }
+                else if(chosen2 == false){
+                    chosen2 = true;
+                    document.getElementById("cardbtnthirteen").style.display = "none";
+                    document.getElementsByClassName("cards")[12].style.animationName = "cardflip";
+                    document.getElementsByClassName("images")[12].style.animationName = "flipback";
+                    setTimeout(function() {
+                        if(card13.src == free.src){
+                            freecard = card13;
+                            matches = matches + 1;
+                            freecard1 = document.getElementsByClassName("cards")[12];
+                            chosen2 = false;
+                            setTimeout(freeimg, 1000);
+                        }
+                        else{
+                            if(card13.src == chosen1data.src + '.png' || card13.src + '.png' == chosen1data.src){
+                                document.getElementsByClassName("images")[12].style.animationName = "cardflip";
+                                chosen1data.style.animationName = "cardflip";
+                                matches = matches + 1;
+                                setTimeout(reset, 400);
+                            }
+                            else{
+                                setTimeout(function() {
+                                   document.getElementsByClassName("images")[12].style.animationName = "cardflip";
+                                   document.getElementsByClassName("cards")[12].style.animationName = "flipback";
+                                   document.getElementById("cardbtnthirteen").style.display = "block";
+                                   chosen1data.style.animationName = "cardflip";
+                                   chosen1data2.style.animationName = "flipback";
+                                   chosen1data3.style.display = "block";
+                                   setTimeout(reset, 400);
+                                }, turnspeed);
+                            }
+                        }
+                    }, 600);
+                }
+            }
+            function cardfourteen(){
+                if(chosen1 == false){
+                    document.getElementById("cardbtnfourteen").style.display = "none";
+                    document.getElementsByClassName("cards")[13].style.animationName = "cardflip";
+                    document.getElementsByClassName("images")[13].style.animationName = "flipback";
+                    if(card14.src == free.src){
+                        freecard = card14;
+                        matches = matches + 1;
+                        freecard1 = document.getElementsByClassName("cards")[13];
+                        setTimeout(freeimg, 1500);
+                    }
+                    else{
+                        chosen1 = true;
+                        chosen1data = document.getElementsByClassName("images")[13];
+                        chosen1data2 = document.getElementsByClassName("cards")[13];
+                        chosen1data3 = document.getElementById("cardbtnfourteen");
+                    }
+                }
+                else if(chosen2 == false){
+                    chosen2 = true;
+                    document.getElementById("cardbtnfourteen").style.display = "none";
+                    document.getElementsByClassName("cards")[13].style.animationName = "cardflip";
+                    document.getElementsByClassName("images")[13].style.animationName = "flipback";
+                    setTimeout(function() {
+                        if(card14.src == free.src){
+                            freecard = card14;
+                            matches = matches + 1;
+                            freecard1 = document.getElementsByClassName("cards")[13];
+                            chosen2 = false;
+                            setTimeout(freeimg, 1000);
+                        }
+                        else{
+                            if(card14.src == chosen1data.src + '.png' || card14.src + '.png' == chosen1data.src){
+                                document.getElementsByClassName("images")[13].style.animationName = "cardflip";
+                                chosen1data.style.animationName = "cardflip";
+                                matches = matches + 1;
+                                setTimeout(reset, 400);
+                            }
+                            else{
+                                setTimeout(function() {
+                                   document.getElementsByClassName("images")[13].style.animationName = "cardflip";
+                                   document.getElementsByClassName("cards")[13].style.animationName = "flipback";
+                                   document.getElementById("cardbtnfourteen").style.display = "block";
+                                   chosen1data.style.animationName = "cardflip";
+                                   chosen1data2.style.animationName = "flipback";
+                                   chosen1data3.style.display = "block";
+                                   setTimeout(reset, 400);
+                                }, turnspeed);
+                            }
+                        }
+                    }, 600);
+                }
+            }
+            function cardfifteen(){
+                if(chosen1 == false){
+                    document.getElementById("cardbtnfifteen").style.display = "none";
+                    document.getElementsByClassName("cards")[14].style.animationName = "cardflip";
+                    document.getElementsByClassName("images")[14].style.animationName = "flipback";
+                    if(card15.src == free.src){
+                        freecard = card15;
+                        matches = matches + 1;
+                        freecard1 = document.getElementsByClassName("cards")[14];
+                        setTimeout(freeimg, 1500);
+                    }
+                    else{
+                        chosen1 = true;
+                        chosen1data = document.getElementsByClassName("images")[14];
+                        chosen1data2 = document.getElementsByClassName("cards")[14];
+                        chosen1data3 = document.getElementById("cardbtnfifteen");
+                    }
+                }
+                else if(chosen2 == false){
+                    chosen2 = true;
+                    document.getElementById("cardbtnfifteen").style.display = "none";
+                    document.getElementsByClassName("cards")[14].style.animationName = "cardflip";
+                    document.getElementsByClassName("images")[14].style.animationName = "flipback";
+                    setTimeout(function() {
+                        if(card15.src == free.src){
+                            freecard = card15;
+                            matches = matches + 1;
+                            freecard1 = document.getElementsByClassName("cards")[14];
+                            chosen2 = false;
+                            setTimeout(freeimg, 1000);
+                        }
+                        else{
+                            if(card15.src == chosen1data.src + '.png' || card15.src + '.png' == chosen1data.src){
+                                document.getElementsByClassName("images")[14].style.animationName = "cardflip";
+                                chosen1data.style.animationName = "cardflip";
+                                matches = matches + 1;
+                                setTimeout(reset, 400);
+                            }
+                            else{
+                                setTimeout(function() {
+                                    document.getElementsByClassName("images")[14].style.animationName = "cardflip";
+                                    document.getElementsByClassName("cards")[14].style.animationName = "flipback";
+                                    document.getElementById("cardbtnfifteen").style.display = "block";
+                                    chosen1data.style.animationName = "cardflip";
+                                    chosen1data2.style.animationName = "flipback";
+                                    chosen1data3.style.display = "block";
+                                    setTimeout(reset, 400);
+                                }, turnspeed);
+                            }
+                        }
+                    }, 600);
+                }
+            }
+        </script>
+    </body>
+</html>
